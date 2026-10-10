@@ -11,6 +11,8 @@ from PyQt5.QtCore import (QEasingCurve, QPoint, QPropertyAnimation,
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QApplication, QLabel, QWidget
 
+from personal_alerts import MatchLogger, PersonalAlerts, Speaker, load_config
+
 current_directory = os.getcwd()
 audio_folder = os.path.join(current_directory, 'Audio')
 image_folder = os.path.join(current_directory, 'Images')
@@ -141,6 +143,11 @@ class Overlay_pulse(QWidget):
 
 
 overlay = Overlay_pulse()
+
+personal_config = load_config()
+personal = PersonalAlerts(personal_config)
+speaker = Speaker(personal_config.get("tts_rate", 190))
+match_logger = MatchLogger(personal_config.get("logging", {}))
 has_run = 0
 ward_run = True
 
@@ -152,6 +159,17 @@ def handle_post():
     global has_run
     global ward_run
     data = request.get_json()
+
+    # Personal state-based reminders and match logging
+    try:
+        match_logger.log(data)
+        with open('config.json', 'r') as f:
+            muted = json.load(f).get('muted', False)
+        for message in personal.update(data):
+            if not muted:
+                speaker.say(message)
+    except Exception as e:
+        print(f"[personal] error: {e}")
     # Debugger for json testing purposes
     # if data:
     #     with open('game_data.json', 'w') as file:
