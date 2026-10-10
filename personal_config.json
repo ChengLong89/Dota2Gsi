@@ -1,0 +1,59 @@
+{
+    "enabled": true,
+    "tts_rate": 190,
+
+    "no_tp": {
+        "enabled": true,
+        "after_minute": 3,
+        "repeat_seconds": 60,
+        "message": "背包没有TP"
+    },
+
+    "low_hp": {
+        "enabled": true,
+        "percent": 25,
+        "repeat_seconds": 20,
+        "message": "血量低"
+    },
+
+    "ultimate_ready": {
+        "enabled": true,
+        "message": "大招好了"
+    },
+
+    "buyback": {
+        "enabled": true,
+        "after_minute": 25,
+        "repeat_seconds": 120,
+        "message": "买活钱不够"
+    },
+
+    "unspent_gold": {
+        "enabled": true,
+        "threshold": 2500,
+        "repeat_seconds": 90,
+        "message": "钱太多了，回家花钱"
+    },
+
+    "last_hit_targets": {
+        "enabled": true,
+        "targets": {"5": 30, "10": 70, "15": 110, "20": 150},
+        "message": "{minute}分钟补刀{actual}，目标{target}"
+    },
+
+    "item_goals": {
+        "enabled": true,
+        "_comment": "价格随版本变化，请按当前补丁核对。name 是 GSI 里的物品内部名。",
+        "items": [
+            {"name": "item_black_king_bar", "cost": 4050, "label": "BKB"},
+            {"name": "item_blink", "cost": 2250, "label": "跳刀"}
+        ],
+        "message": "钱够买{label}了"
+    },
+
+    "logging": {
+        "enabled": true,
+        "folder": "match_logs",
+        "every_seconds": 5
+    }
+}

@@ -42,3 +42,29 @@ This project is licensed under the terms of the MIT license.
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
+
+## 个性化提醒（personal-alerts 分支）
+
+在原有计时提醒之外，`personal_alerts.py` 根据 GSI 里你自己的英雄、物品和金钱做语音提醒：
+
+| 提醒 | 触发条件 |
+|---|---|
+| 背包没有TP | 3 分钟后 TP 栏为空（60 秒内不重复） |
+| 血量低 | 血量低于 25% |
+| 大招好了 | 大招从冷却变为可用 |
+| 买活钱不够 | 25 分钟后金钱低于买活费用 |
+| 钱太多了 | 活着且手上金钱超过 2500 |
+| 补刀落后 | 5/10/15/20 分钟补刀低于目标 |
+| 钱够买 X | 金钱够买目标装备且还没买（每局一次） |
+
+所有阈值、文案和目标装备都在 `personal_config.json` 里改（单独存放，避免被菜单保存时覆盖）。装备价格随版本变化，请按当前补丁核对。静音键对这些提醒同样生效。
+
+每局还会把快照写到 `match_logs/<matchid>.jsonl`，赛后运行：
+
+```
+python analyze_match.py            # 最近一局：补刀节点、出装时间、死亡时间、囤钱时长
+python analyze_match.py --plot     # 另存经济 / 补刀曲线图（需要 matplotlib）
+```
+
+安装：`pip install -r requirements.txt`（新增 pyttsx3，用 Windows 自带语音；装了中文语音包会自动选中文）。
+测试：`python test_personal_alerts.py`
