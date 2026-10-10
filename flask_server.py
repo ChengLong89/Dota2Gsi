@@ -50,8 +50,8 @@ def process_game_data(minutes, seconds):
         alerts = [
             (settings['stack_checkbox'] and minutes >=
              1 and seconds == 40, 'stack'),
-            (settings['exprune_checkbox'] and (minutes == 6 and seconds == 30) or (
-                minutes > 6 and (minutes - 6) % 7 == 0 and seconds == 30), 'exprune'),
+            (settings['exprune_checkbox'] and minutes >= 6 and
+             (minutes - 6) % 7 == 0 and seconds == 30, 'exprune'),
             (settings['thirdsound_checkbox'] and (minutes - 2) %
              3 == 0 and seconds == 50 and not minutes > 10, 'lotus'),
             (settings['bounty_checkbox'] and (minutes - 2) %
